@@ -2,20 +2,18 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import "./Signup.css";
-
 function Signup() {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
   function createUser() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user);
         console.log(userCredential);
-        setErrorMessage(""); // Clear any previous error message
+        setErrorMessage(""); 
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -89,5 +87,4 @@ function Signup() {
     </div>
   );
 }
-
 export default Signup;

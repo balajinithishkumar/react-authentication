@@ -7,16 +7,36 @@ function Login() {
   const [user, setUser] = useState(null);
   const [signinemail, setsigninEmail] = useState("");
   const [signinpassword, setsigninPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   function signinUser() {
     signInWithEmailAndPassword(auth, signinemail, signinpassword)
       .then((userCredential) => {
-        console.log(userCredential)
+        setUser(userCredential.user);
+        console.log(userCredential);
+        setErrorMessage(""); 
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorCode, errorMessage);
+        let message;
+        switch (errorCode) {
+          case 'auth/wrong-password':
+            message = "Incorrect password. Please try again.";
+            break;
+          case 'auth/user-not-found':
+            message = "No user found with this email address.";
+            break;
+          case 'auth/invalid-email':
+            message = "Invalid email address format.";
+            break;
+          case 'auth/invalid-credential':
+            message = "Invalid credentials. Please try again.";
+            break;
+          default:
+            message = error.message;
+        }
+        setErrorMessage(message);
+        console.error(errorCode, message);
       });
   }
 
@@ -26,13 +46,13 @@ function Login() {
         <div className="signupContent1">
           <div className="signup">
             <div>
-            <p style={{paddingBottom:"15px"}}>Welcome back</p>
-            <div style={{display:"flex", flexDirection:"column", gap:"10px"}}>
-            <div className="signup-text" >Login!</div>
-<p>New user? <span style={{color:"red", paddingLeft:"10px"}}>Sign up</span></p>
+              <p style={{paddingBottom:"15px"}}>Welcome back</p>
+              <div style={{display:"flex", flexDirection:"column", gap:"10px"}}>
+                <div className="signup-text">Login!</div>
+                <p>New user? <span style={{color:"red", paddingLeft:"10px"}}>Sign up</span></p>
+              </div>
             </div>
-            </div>
-           
+            <p className="signupvalidation" style={{color: "red"}}>{errorMessage}</p>
             <div className="email">
               <p>Email address</p>
               <div className="input_svg">
@@ -44,7 +64,7 @@ function Login() {
               </div>
             </div>
             <div className="create-password">
-              <p>Create password</p>
+              <p>Password</p>
               <div className="input_svg">
                 <input
                   type="password"

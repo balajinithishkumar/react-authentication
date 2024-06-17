@@ -4,7 +4,7 @@ function App() {
   return (
     <div className="app">
       <Signup />
-      {/* <Login /> */}
+      <Login />
     </div>
   );
 }
