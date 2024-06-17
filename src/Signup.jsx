@@ -8,24 +8,33 @@ function Signup() {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   function createUser() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setUser(userCredential.user);
         console.log(userCredential);
+        setErrorMessage(""); // Clear any previous error message
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorCode, errorMessage);
+        if (errorCode === 'auth/email-already-in-use') {
+          setErrorMessage("This email is already in use. Please try with a different email address.");
+        } else {
+          setErrorMessage(error.message);
+        }
+        console.error(errorCode);
       });
   }
+
   return (
     <div className="signup-main">
       <div className="signupContent">
         <div className="signupContent1">
           <div className="signup">
             <div className="signup-text">Sign Up!</div>
+            <p className="signupvalidation" style={{color: "red"}}>{errorMessage}</p>
             <div className="name">
               <p>Name</p>
               <div className="input_svg">
@@ -68,16 +77,17 @@ function Signup() {
         </div>
         <div className="signup_content2">
           <div className="signupcontent">
-          <p className="domain_name">www.curlsmanda.com</p>
-          <div className="signupcontentchild">
-            <p>curlsmanda</p>
-            <h1>Smart and quick digital collaboration platform for startups & investors to validate and invest on deals</h1>
-           <button className="watch_demo">Watch Demo</button>
-          </div>
+            <p className="domain_name">www.curlsmanda.com</p>
+            <div className="signupcontentchild">
+              <p>curlsmanda</p>
+              <h1>Smart and quick digital collaboration platform for startups & investors to validate and invest on deals</h1>
+              <button className="watch_demo">Watch Demo</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
 export default Signup;

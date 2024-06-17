@@ -52,32 +52,6 @@ function App() {
     <div>
         <div className="app">
          
-          <div className="signin">
-            <div className="name">
-              <p>Name</p>
-              <input
-                className="name"
-                placeholder="Name"
-                onChange={(e) => setsigninName(e.target.value)}
-              />
-            </div>
-            <div className="email">
-              <p>Email</p>
-              <input
-                placeholder="Email"
-                onChange={(e) => setsigninEmail(e.target.value)}
-              />
-            </div>
-            <div className="password">
-              <p>Password</p>
-              <input
-                type="password"
-                onChange={(e) => setsigninPassword(e.target.value)}
-                placeholder="password"
-              />
-            </div>
-            <button onClick={signinUser}>sign in</button>
-          </div>
         </div>
     </div>
   );
