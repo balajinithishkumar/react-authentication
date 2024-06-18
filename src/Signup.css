@@ -52,6 +52,7 @@
 .signup_btn {
   width: 100%;
   background-color: #ffc145;
+  transition: background-color 0.3s ease;
   color: white;
   border: none;
   padding: 10px;
@@ -89,6 +90,7 @@
   background-color: #ffc145;
   color: black;
   width: fit-content;
+  transition: background-color 0.3s ease;
   height: fit-content;
   padding: 10px;
   border: none;
@@ -98,6 +100,11 @@
   color: white;
   padding: 15px;
 }
+
+.watch_demo:hover {
+  background-color: #fad07d;
+}
+
 .domain_name {
   position: absolute;
   right: 0;
@@ -120,9 +127,6 @@
     line-height: 45px;
 }
 .signup_btn:hover {
-  background-color: #fad07d;
-}
-.watch_demo:hover {
   background-color: #fad07d;
 }
 
@@ -164,5 +168,14 @@ span a {
   gap: 15px;
 }
 .playbutton {
-  width: 25px;f
+  width: 25px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.error {
+ color: red;
 }

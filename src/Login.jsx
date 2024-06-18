@@ -3,14 +3,17 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+
 function Login() {
   const [user, setUser] = useState(null);
   const [signinemail, setsigninEmail] = useState("");
   const [signinpassword, setsigninPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  function signinUser() {
-    signInWithEmailAndPassword(auth, signinemail, signinpassword)
+  
+  function signinUser(data) {
+   signInWithEmailAndPassword(auth, data.Email, data.password)
       .then((userCredential) => {
         setUser(userCredential.user);
         setErrorMessage("");
@@ -43,6 +46,12 @@ function Login() {
         console.error(errorCode, message);
       });
   }
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = (data) =>{
+    signinUser(data)
+  };
+  console.log(errors);
   return (
     <div className="signup-main">
       <div className="signupContent">
@@ -71,15 +80,23 @@ function Login() {
             <p className="signupvalidation" style={{ color: "red" }}>
               {errorMessage}
             </p>
+            <form onSubmit={handleSubmit(onSubmit)}>
             <div className="email">
               <p>Email address</p>
               <div className="input_svg">
                 <input
                   placeholder="Enter Email"
                   onChange={(e) => setsigninEmail(e.target.value)}
+                  {...register("Email", {
+                    required: "Email is required",
+                    minLength: { value: 15, message: "Email must be at least 15 characters long" },
+                    maxLength: { value: 67, message: "Email cannot exceed 67 characters" },
+                    pattern: { value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, message: "Email is not valid" }
+                  })}
                 />
                 <img src="email.svg" alt="" />
               </div>
+              {errors.Email && <p className="error">{errors.Email.message}</p>}
             </div>
             <div className="create-password">
               <p>Password</p>
@@ -88,13 +105,17 @@ function Login() {
                   type="password"
                   onChange={(e) => setsigninPassword(e.target.value)}
                   placeholder="Password"
+                  {...register("password", {
+                    required: "Password is required",
+                    maxLength: { value: 14, message: "Password cannot exceed 14 characters" }
+                  })}
                 />
                 <img src="show.svg" alt="" />
               </div>
+              {errors.password && <p className="error">{errors.password.message}</p>}
             </div>
-            <button className="signup_btn" onClick={signinUser}>
-              Login
-            </button>
+            <input type="submit" className="signup_btn" onClick={handleSubmit(onSubmit)}/>
+            </form>
           </div>
           <div className="terms_privacy_policy">
             Terms and Conditions | Privacy Policy
@@ -106,7 +127,7 @@ function Login() {
             <div className="signupcontentchild">
             <div className="logo_and_name">
                 <img style={{ width: "30px" }} src="circle.svg" alt="" />
-                <p style={{ fontSize: "23px", fontWeight: "500" }}>
+                <p style={{ fontSize: "23px", letterSpacing:"3px" ,fontWeight: "500" }}>
                   curlsmanda
                 </p>
               </div>

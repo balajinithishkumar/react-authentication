@@ -3,6 +3,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+
 function Signup() {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
@@ -10,18 +12,12 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const createUser = async (event) => {
-    event.preventDefault();
-    if (!email.trim()) {
-      setErrorMessage("Email is required.");
-      return;
-    }
-    if (!password.trim()) {
-      setErrorMessage("Password is required.");
-      return;
-    }
+  const createUser = async (data) => {
+    console.log(data.Email)
+    console.log(data.password)
+    console.log(data.Name)
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, data.Email, data.password);
       setUser(userCredential.user);
       setErrorMessage("");
       navigate("/");
@@ -46,6 +42,12 @@ function Signup() {
     }
   };
 
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = (data) =>{
+    createUser(data)
+  };
+  console.log(errors)
+
   return (
     <div className="signup-main">
       <div className="signupContent">
@@ -55,6 +57,7 @@ function Signup() {
             <p className="signupvalidation" style={{ color: "red" }}>
               {errorMessage}
             </p>
+            <form onSubmit={handleSubmit(onSubmit)}>
             <div className="name">
               <p>Name</p>
               <div className="input_svg">
@@ -62,9 +65,15 @@ function Signup() {
                   className="name"
                   placeholder="Enter Name"
                   onChange={(e) => setName(e.target.value)}
+                  {...register("Name", {
+                    required: "Name is required",
+                    minLength: { value: 10, message: "Name must be at least 10 characters long" },
+                    maxLength: { value: 20, message: "Name cannot exceed 20 characters" }
+                  })}
                 />
                 <img src="person.svg" alt="" />
               </div>
+              {errors.Name && <p className="error">{errors.Name.message}</p>}
             </div>
             <div className="email">
               <p>Email address</p>
@@ -72,9 +81,16 @@ function Signup() {
                 <input
                   placeholder="Enter Email"
                   onChange={(e) => setEmail(e.target.value)}
+                  {...register("Email", {
+                    required: "Email is required",
+                    minLength: { value: 15, message: "Email must be at least 15 characters long" },
+                    maxLength: { value: 67, message: "Email cannot exceed 67 characters" },
+                    pattern: { value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, message: "Email is not valid" }
+                  })}
                 />
                 <img src="email.svg" alt="" />
               </div>
+              {errors.Email && <p className="error">{errors.Email.message}</p>}
             </div>
             <div className="create-password">
               <p>Create password</p>
@@ -83,9 +99,14 @@ function Signup() {
                   type="password"
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Create Password"
+                  {...register("password", {
+                    required: "Password is required",
+                    maxLength: { value: 14, message: "Password cannot exceed 14 characters" }
+                  })}
                 />
                 <img className="password_show" src="show.svg" alt="" />
               </div>
+              {errors.password && <p className="error">{errors.password.message}</p>}
             </div>
             <div className="remember_forgot_password">
               <div className="checkbox_text">
@@ -99,9 +120,8 @@ function Signup() {
                 Forgot password?
               </p>
             </div>
-            <button className="signup_btn" onClick={createUser}>
-              Signup
-            </button>
+            <input type="submit" className="signup_btn" onClick={handleSubmit(onSubmit)}/>
+            </form>
             <p className="login_text">
               Already have an account? <Link to="/login">Login</Link>
             </p>
@@ -116,7 +136,7 @@ function Signup() {
             <div className="signupcontentchild">
               <div className="logo_and_name">
                 <img style={{ width: "30px" }} src="circle.svg" alt="" />
-                <p style={{ fontSize: "23px", fontWeight: "500" }}>
+                <p style={{ fontSize: "23px", letterSpacing:"3px",fontWeight: "500" }}>
                   curlsmanda
                 </p>
               </div>

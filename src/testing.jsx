@@ -1,60 +1,35 @@
-import { useState, useEffect } from "react";
-import {createUserWithEmailAndPassword, onAuthStateChanged , signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebase"; 
-import "./App.css";
-import HomePage from "./HomePage";
-
-function App() {
-  const [name, setName] = useState("");
-  const [user, setUser] = useState(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [signinname, setsigninName] = useState("");
-  const [signinemail, setsigninEmail] = useState("");
-  const [signinpassword, setsigninPassword] = useState("");
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user); 
-      } else {
-        setUser(null); 
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
-  function createUser() {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setUser(userCredential.user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorCode, errorMessage);
-      });
-  }
-
-  function signinUser() {
-    signInWithEmailAndPassword(auth, signinemail, signinpassword)
-      .then((userCredential) => {
-        setUser(userCredential.user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(errorCode, errorMessage);
-      });
-  }
-
+import { useForm } from 'react-hook-form';
+export default function Testing() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = data => console.log(data);
   return (
-    <div>
-        <div className="app">
-         
-        </div>
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <input
+          type="email"
+          placeholder="Email"
+          {...register("Email", {
+            required: "Email is required",
+            minLength: { value: 15, message: "Email must be at least 15 characters long" },
+            maxLength: { value: 67, message: "Email cannot exceed 67 characters" },
+            pattern: { value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, message: "Email is not valid" }
+          })}
+        />
+        {errors.Email && <p>{errors.Email.message}</p>}
+      </div>
+      <div>
+        <input
+          type="password"
+          placeholder="Password"
+          {...register("password", {
+            required: "Password is required",
+            maxLength: { value: 14, message: "Password cannot exceed 14 characters" }
+          })}
+        />
+        {errors.password && <p>{errors.password.message}</p>}
+      </div>
+      
+      <input type="submit" />
+    </form>
   );
 }
-export default App;
-{/* <HomePage user={user} setuser={setUser} /> */}
