@@ -51,9 +51,8 @@
 }
 .signup_btn {
   width: 100%;
-  background-color: #ffc145;
+  background-color: #ffc145 !important;
   transition: background-color 0.3s ease;
-  color: white;
   border: none;
   padding: 10px;
   border-radius: 10px;
@@ -66,7 +65,7 @@
   border-bottom: 1.5px solid #8f8f8d;
   padding-bottom: 5px;
 }
-.input_svg .password_show{
+.input_svg .password_show {
   cursor: pointer;
 }
 
@@ -122,19 +121,20 @@
   left: 50px;
 }
 .signupcontentchild h1 {
-    font-weight: 400;
-    font-size: 40px;
-    line-height: 45px;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 45px;
 }
 .signup_btn:hover {
-  background-color: #fad07d;
+  background-color: #fad07d !important;
 }
 
 .input_svg input {
   width: 80%;
 }
 
-.welcome_text , .newUser_text{
+.welcome_text,
+.newUser_text {
   font-weight: 600;
 }
 
@@ -145,22 +145,22 @@ span a {
 .login_text {
   font-weight: 500;
 }
-.remember_forgot_password{
- display: flex; 
- justify-content: space-between;
+.remember_forgot_password {
+  display: flex;
+  justify-content: space-between;
 }
 
-.forgot_password{
+.forgot_password {
   display: flex;
   align-items: end;
   cursor: pointer;
 }
-.checkbox_text{
+.checkbox_text {
   display: flex;
   gap: 10px;
 }
 .checkbox_text p {
-  color: #7B7B79;
+  color: #7b7b79;
 }
 .logo_and_name {
   display: flex;
@@ -177,5 +177,41 @@ form {
   gap: 40px;
 }
 .error {
- color: red;
+  color: red;
+}
+
+@media only screen and (max-width: 1400px) {
+  .signupContent {
+  margin: 20px;
+  }
+  .signupContent1 {
+    width: 100%;
+  }
+  .signup_content2 {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 725px) {
+  .signupContent {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    height: 130vh;
+  }
+  .signup-main {
+    background-color: #5b5f97;
+    height: 100%;
+  }
+  .signupContent1 {
+    width: 100%;
+    height: 90vh;
+  }
+  .signup_content2 {
+    height: 40vh;
+    width: 100%;
+  }
+  .signup_content2 , .domain_name , .signupcontentchild  {
+    position: static;
+  }
 }

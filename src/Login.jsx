@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 
 function Login() {
   const [user, setUser] = useState(null);
@@ -11,9 +11,13 @@ function Login() {
   const [signinpassword, setsigninPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  
+  const [showPassword, setShowPassword] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   function signinUser(data) {
-   signInWithEmailAndPassword(auth, data.Email, data.password)
+    signInWithEmailAndPassword(auth, data.Email, data.password)
       .then((userCredential) => {
         setUser(userCredential.user);
         setErrorMessage("");
@@ -46,10 +50,13 @@ function Login() {
         console.error(errorCode, message);
       });
   }
-
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = (data) =>{
-    signinUser(data)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    signinUser(data);
   };
   console.log(errors);
   return (
@@ -81,40 +88,64 @@ function Login() {
               {errorMessage}
             </p>
             <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="email">
-              <p>Email address</p>
-              <div className="input_svg">
-                <input
-                  placeholder="Enter Email"
-                  onChange={(e) => setsigninEmail(e.target.value)}
-                  {...register("Email", {
-                    required: "Email is required",
-                    minLength: { value: 15, message: "Email must be at least 15 characters long" },
-                    maxLength: { value: 67, message: "Email cannot exceed 67 characters" },
-                    pattern: { value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, message: "Email is not valid" }
-                  })}
-                />
-                <img src="email.svg" alt="" />
+              <div className="email">
+                <p>Email address</p>
+                <div className="input_svg">
+                  <input
+                    placeholder="Enter Email"
+                    onChange={(e) => setsigninEmail(e.target.value)}
+                    {...register("Email", {
+                      required: "Email is required",
+                      minLength: {
+                        value: 15,
+                        message: "Email must be at least 15 characters long",
+                      },
+                      maxLength: {
+                        value: 67,
+                        message: "Email cannot exceed 67 characters",
+                      },
+                      pattern: {
+                        value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                        message: "Email is not valid",
+                      },
+                    })}
+                  />
+                  <img src="email.svg" alt="" />
+                </div>
+                {errors.Email && (
+                  <p className="error">{errors.Email.message}</p>
+                )}
               </div>
-              {errors.Email && <p className="error">{errors.Email.message}</p>}
-            </div>
-            <div className="create-password">
-              <p>Password</p>
-              <div className="input_svg">
-                <input
-                  type="password"
-                  onChange={(e) => setsigninPassword(e.target.value)}
-                  placeholder="Password"
-                  {...register("password", {
-                    required: "Password is required",
-                    maxLength: { value: 14, message: "Password cannot exceed 14 characters" }
-                  })}
-                />
-                <img src="show.svg" alt="" />
+              <div className="create-password">
+                <p>Password</p>
+                <div className="input_svg">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    onChange={(e) => setsigninPassword(e.target.value)}
+                    placeholder="Password"
+                    {...register("password", {
+                      required: "Password is required",
+                      maxLength: {
+                        value: 14,
+                        message: "Password cannot exceed 14 characters",
+                      },
+                    })}
+                  />
+                  <img
+                    src={showPassword ? "hide.svg" : "show.svg"}
+                    onClick={toggleShowPassword}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+                {errors.password && (
+                  <p className="error">{errors.password.message}</p>
+                )}
               </div>
-              {errors.password && <p className="error">{errors.password.message}</p>}
-            </div>
-            <input type="submit" className="signup_btn" onClick={handleSubmit(onSubmit)}/>
+              <input
+                type="submit"
+                className="signup_btn"
+                onClick={handleSubmit(onSubmit)}
+              />
             </form>
           </div>
           <div className="terms_privacy_policy">
@@ -125,15 +156,21 @@ function Login() {
           <div className="signupcontent">
             <p className="domain_name">www.curlsmanda.com</p>
             <div className="signupcontentchild">
-            <div className="logo_and_name">
+              <div className="logo_and_name">
                 <img style={{ width: "30px" }} src="circle.svg" alt="" />
-                <p style={{ fontSize: "23px", letterSpacing:"3px" ,fontWeight: "500" }}>
+                <p
+                  style={{
+                    fontSize: "23px",
+                    letterSpacing: "3px",
+                    fontWeight: "500",
+                  }}
+                >
                   curlsmanda
                 </p>
               </div>
               <h1>
                 Smart and quick digital collaboration platform for startups &
-                investors to validate and invest on deals
+                investors to validate and invest on deals.
               </h1>
               <button
                 style={{ display: "flex", alignItems: "center", gap: "5px" }}

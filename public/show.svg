@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" id="show"><path fill="#2B3151" fill-rule="evenodd" d="M32 18.667c-9.729 0-18.023 5.751-21.438 13.851a1.333 1.333 0 1 1-2.457-1.036C11.942 22.382 21.212 16 32 16s20.058 6.382 23.895 15.482a1.333 1.333 0 1 1-2.457 1.036c-3.415-8.1-11.71-13.851-21.438-13.851Z" clip-rule="evenodd"></path><path fill="#2B3151" fill-rule="evenodd" d="M32 45.333c-9.729 0-18.023-5.751-21.438-13.851a1.333 1.333 0 1 0-2.457 1.036C11.942 41.618 21.212 48 32 48s20.058-6.382 23.895-15.482a1.333 1.333 0 1 0-2.457-1.036c-3.415 8.1-11.71 13.851-21.438 13.851Z" clip-rule="evenodd"></path><path fill="#2B3151" fill-rule="evenodd" d="M32 25.334a6.667 6.667 0 1 0 0 13.333 6.667 6.667 0 0 0 0-13.333ZM22.667 32a9.333 9.333 0 1 1 18.666 0 9.333 9.333 0 0 1-18.666 0Z" clip-rule="evenodd"></path></svg>
+<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1 12C1 12 5 20 12 20C19 20 23 12 23 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="12" cy="12" r="3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
