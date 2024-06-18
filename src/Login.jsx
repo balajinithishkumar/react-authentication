@@ -2,35 +2,39 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import "./Signup.css";
-
+import { Link, useNavigate } from "react-router-dom";
 function Login() {
   const [user, setUser] = useState(null);
   const [signinemail, setsigninEmail] = useState("");
   const [signinpassword, setsigninPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  const navigate = useNavigate();
   function signinUser() {
     signInWithEmailAndPassword(auth, signinemail, signinpassword)
       .then((userCredential) => {
         setUser(userCredential.user);
-        console.log(userCredential);
-        setErrorMessage(""); 
+        setErrorMessage("");
+        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
+        console.log;
         let message;
         switch (errorCode) {
-          case 'auth/wrong-password':
+          case "auth/wrong-password":
             message = "Incorrect password. Please try again.";
             break;
-          case 'auth/user-not-found':
+          case "auth/user-not-found":
             message = "No user found with this email address.";
             break;
-          case 'auth/invalid-email':
+          case "auth/invalid-email":
             message = "Invalid email address format.";
             break;
-          case 'auth/invalid-credential':
+          case "auth/invalid-credential":
             message = "Invalid credentials. Please try again.";
+            break;
+          case "auth/missing-password":
+            message = "Password is missing. Please enter your password.";
             break;
           default:
             message = error.message;
@@ -39,20 +43,34 @@ function Login() {
         console.error(errorCode, message);
       });
   }
-
   return (
     <div className="signup-main">
       <div className="signupContent">
         <div className="signupContent1">
           <div className="signup">
             <div>
-              <p style={{paddingBottom:"15px"}}>Welcome back</p>
-              <div style={{display:"flex", flexDirection:"column", gap:"10px"}}>
+              <p className="welcome_text" style={{ paddingBottom: "15px" }}>
+                Welcome back
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+              >
                 <div className="signup-text">Login!</div>
-                <p>New user? <span style={{color:"red", paddingLeft:"10px"}}>Sign up</span></p>
+                <p className="newUser_text">
+                  New user?{" "}
+                  <span style={{ color: "red", paddingLeft: "10px" }}>
+                    <Link to="/signup">Sign up</Link>
+                  </span>
+                </p>
               </div>
             </div>
-            <p className="signupvalidation" style={{color: "red"}}>{errorMessage}</p>
+            <p className="signupvalidation" style={{ color: "red" }}>
+              {errorMessage}
+            </p>
             <div className="email">
               <p>Email address</p>
               <div className="input_svg">
@@ -86,12 +104,27 @@ function Login() {
           <div className="signupcontent">
             <p className="domain_name">www.curlsmanda.com</p>
             <div className="signupcontentchild">
-              <p>curlsmanda</p>
+            <div className="logo_and_name">
+                <img style={{ width: "30px" }} src="circle.svg" alt="" />
+                <p style={{ fontSize: "23px", fontWeight: "500" }}>
+                  curlsmanda
+                </p>
+              </div>
               <h1>
                 Smart and quick digital collaboration platform for startups &
                 investors to validate and invest on deals
               </h1>
-              <button className="watch_demo">Watch Demo</button>
+              <button
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+                className="watch_demo"
+              >
+                <img
+                  className="playbutton"
+                  src="play-button-svgrepo-com 1.png"
+                  alt=""
+                />
+                <p>Watch Demo</p>
+              </button>
             </div>
           </div>
         </div>
@@ -99,5 +132,4 @@ function Login() {
     </div>
   );
 }
-
 export default Login;

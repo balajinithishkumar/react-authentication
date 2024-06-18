@@ -16,17 +16,18 @@
   background-color: #5b5f97;
   width: 100%;
   display: flex;
-  margin: 20px;
+  margin: 40px;
+  justify-content: space-between;
 }
 
 .signupContent1 {
   display: flex;
-  width: 50%;
+  width: 40%;
   flex-direction: column;
   height: 100%;
   background-color: white;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 30px;
   position: relative;
 }
 
@@ -54,7 +55,7 @@
   color: white;
   border: none;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -63,8 +64,11 @@
   justify-content: space-between;
   border-bottom: 1.5px solid #8f8f8d;
   padding-bottom: 5px;
+}
+.input_svg .password_show{
   cursor: pointer;
 }
+
 .input_svg img {
   width: 18px;
 }
@@ -78,7 +82,7 @@
   margin-top: 10px;
 }
 .signup_content2 {
-  width: 50%;
+  width: 40%;
   position: relative;
 }
 .watch_demo {
@@ -88,10 +92,11 @@
   height: fit-content;
   padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   font-weight: 500;
-  font-weight: 500px;
   cursor: pointer;
+  color: white;
+  padding: 15px;
 }
 .domain_name {
   position: absolute;
@@ -111,5 +116,53 @@
 }
 .signupcontentchild h1 {
     font-weight: 400;
+    font-size: 40px;
     line-height: 45px;
+}
+.signup_btn:hover {
+  background-color: #fad07d;
+}
+.watch_demo:hover {
+  background-color: #fad07d;
+}
+
+.input_svg input {
+  width: 80%;
+}
+
+.welcome_text , .newUser_text{
+  font-weight: 600;
+}
+
+span a {
+  color: red;
+  text-decoration: none;
+}
+.login_text {
+  font-weight: 500;
+}
+.remember_forgot_password{
+ display: flex; 
+ justify-content: space-between;
+}
+
+.forgot_password{
+  display: flex;
+  align-items: end;
+  cursor: pointer;
+}
+.checkbox_text{
+  display: flex;
+  gap: 10px;
+}
+.checkbox_text p {
+  color: #7B7B79;
+}
+.logo_and_name {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.playbutton {
+  width: 25px;f
 }
