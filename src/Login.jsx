@@ -143,6 +143,7 @@ function Login() {
               </div>
               <input
                 type="submit"
+                style={{ fontWeight: 500, color: "white" }}
                 className="signup_btn"
                 onClick={handleSubmit(onSubmit)}
               />
@@ -157,16 +158,7 @@ function Login() {
             <p className="domain_name">www.curlsmanda.com</p>
             <div className="signupcontentchild">
               <div className="logo_and_name">
-                <img style={{ width: "30px" }} src="circle.svg" alt="" />
-                <p
-                  style={{
-                    fontSize: "23px",
-                    letterSpacing: "3px",
-                    fontWeight: "500",
-                  }}
-                >
-                  curlsmanda
-                </p>
+                <img style={{ width: "170px" }} src="logo.svg" alt="" />
               </div>
               <h1>
                 Smart and quick digital collaboration platform for startups &

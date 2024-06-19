@@ -1,0 +1,110 @@
+body {
+    font-family: "Lato", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  
+  .App {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+  }
+  
+  .sidebar {
+    height: 100%;
+    width: 80px; /* Initial width when collapsed */
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+    border-right: 1px solid rgb(221, 218, 218);
+  }
+  
+  .sidebar .sidebar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sidebar .sidebar-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    justify-content: flex-start;
+  }
+  
+  .sidebar .sidebar-item .icon {
+    font-size: 50px;
+    color: #818181;
+    transition: 0.3s;
+    padding-left: 20px;
+  }
+  
+  .sidebar .sidebar-item span {
+    color: #818181;
+    margin-left: 20px;
+    display: none; /* Initially hidden */
+  }
+  
+  .sidebar .sidebar-item:hover .icon,
+  .sidebar .sidebar-item:hover span {
+    color: #3a3939;
+    cursor: pointer;
+  }
+  
+  .sidebar .togglebtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding-left: 20px;
+  }
+  
+  .sidebar .togglebtn img {
+    width: 25px;
+    height: 25px;
+  }
+  
+  .sidebar.active {
+    width: 250px; /* Expanded width */
+  }
+  
+  .sidebar.active .sidebar-item span {
+    display: inline; /* Show text when expanded */
+  }
+  
+  .sidebar .logo-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+    padding-left: 20px;
+  }
+  
+  .sidebar .logo {
+    color: #f1f1f1;
+    font-size: 20px;
+    margin-right: 10px;
+    display: none; /* Initially hidden */
+  }
+  
+  .sidebar .logo.show {
+    display: block;
+  }
+  
+  .main-content {
+    transition: margin-left .5s;
+    padding: 16px;
+    margin-left: 80px; /* Initial margin when sidebar is collapsed */
+  }
+  
+  .main-content.active {
+    margin-left: 250px; /* Margin when sidebar is expanded */
+  }
+  

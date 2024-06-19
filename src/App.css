@@ -1,3 +1,19 @@
-*{
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* App.css */
+
+/* Smooth transition for collapse elements */
+.collapse {
+  transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Override Bootstrap's default collapsed height */
+.collapsing {
+  height: 0 !important;
+  overflow: hidden;
+  transition: none;
 }
