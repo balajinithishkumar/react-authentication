@@ -45,7 +45,7 @@
 }
 .name,
 .email,
-.create-password {
+.create-password, .role_label {
   color: #9d9d9a;
 }
 .signup_btn {
@@ -178,6 +178,15 @@ form {
 }
 .error {
   color: red;
+}
+
+.formField {
+  margin-bottom: 15px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
 }
 
 @media only screen and (max-width: 1400px) {

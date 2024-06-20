@@ -1,9 +1,11 @@
-import { useState } from "react";
+// Signup.jsx
+import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import RoleSelect from "./RoleSelect";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -21,7 +23,7 @@ function Signup() {
     console.log(data.Email);
     console.log(data.password);
     console.log(data.Name);
-
+    console.log(data.role);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -30,6 +32,8 @@ function Signup() {
       );
       setUser(userCredential.user);
       setErrorMessage("");
+      // Store the role in localStorage
+      localStorage.setItem('role', data.role);
       navigate("/");
     } catch (error) {
       const errorCode = error.code;
@@ -56,6 +60,7 @@ function Signup() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -150,6 +155,7 @@ function Signup() {
                   <p className="error">{errors.password.message}</p>
                 )}
               </div>
+              <RoleSelect control={control} errors={errors} />
               <div className="remember_forgot_password">
                 <div className="checkbox_text">
                   <input type="checkbox" />
@@ -207,4 +213,5 @@ function Signup() {
     </div>
   );
 }
+
 export default Signup;

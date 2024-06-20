@@ -12,7 +12,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
    const [role, setRole] = useState(null); // Add state for role
-   
+
    useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -37,12 +37,11 @@ function App() {
         <Routes>
         <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
-          <Route path="/franchiseregistration" element={user && role === roles.FRANCHISE ? <FranchiseRegistration /> : <Navigate to="/" />} />
+          <Route path="/franchiseregistration" element={user && role === roles.FRANCHISE == "Franchise" ? <FranchiseRegistration /> : <Navigate to="/" />} />
           <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
         </Routes>
       </div>
     </Router>
   );
 }
-
 export default App;
