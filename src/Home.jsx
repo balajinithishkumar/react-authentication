@@ -1,20 +1,21 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { auth } from './firebase';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { auth } from "./firebase";
+import Sidebar from "./Sidebar";
+
 function Home() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       await auth.signOut();
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
-      console.error('Error signing out:', error);
+      console.error("Error signing out:", error);
     }
   };
   return (
     <div>
-      <h1>Welcome to the Home Page</h1>
-      <button onClick={handleLogout}>Logout</button>
+      <Sidebar />
     </div>
   );
 }
