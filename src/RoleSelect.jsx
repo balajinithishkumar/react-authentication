@@ -9,8 +9,6 @@ const roles = [
 
 const RoleSelect = ({ control, errors }) => {
 
-
-
   return (
     <div className="formField">
       <label  className='role_label' htmlFor="role">Role</label>

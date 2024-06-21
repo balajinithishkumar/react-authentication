@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "./firebase";
 import Sidebar from "./Sidebar";
@@ -13,10 +12,15 @@ function Home() {
       console.error("Error signing out:", error);
     }
   };
+
   return (
     <div>
-      <Sidebar />
+      <Sidebar  />
+      {/* <button  onClick={() => {
+        handleLogout()
+      }}> button</button> */}
     </div>
   );
 }
+
 export default Home;
