@@ -1,0 +1,43 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  background-color: #232627;
+  width: 100%;
+  height: fit-content;
+  margin-top: 30px;
+  border-radius: 10px;
+  padding: 5px;
+  gap: 10px;
+}
+.profile_information {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: black;
+  border-radius: 10px;
+  padding: 10px;
+}
+.username_email_id p {
+  font-size: 14px;
+}
+.username_email_id mail {
+  font-size: 12px;
+  color: grey;
+}
+.profile_name img {
+  width: 35px;
+  border-radius: 30px;
+}
+
+.logout {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  border: 1px solid #383c3d;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 300;
+  cursor: pointer;
+  border-radius: 10px;
+}

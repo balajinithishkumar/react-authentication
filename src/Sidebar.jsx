@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import "./reset.css";
 import "./Sidebar.css";
 import { Inbox, Drafts, Star, Send, Delete, Report } from "@mui/icons-material";
-import StartIcon from '@mui/icons-material/Start';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
+import StartIcon from "@mui/icons-material/Start";
+import MessageCategories from "./MessageCategories";
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isRoleFranchise, setIsRoleFranchise] = useState(localStorage.getItem("role") == "franchise" ?  true :  false);
-  const [isMessageCategoriesExpanded, setIsMessageCategoriesExpanded] = useState(false);
+  const [isRoleFranchise, setIsRoleFranchise] = useState(
+    localStorage.getItem("role") == "franchise" ? true : false
+  );
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
@@ -28,9 +28,18 @@ const Sidebar = () => {
     }
   }, []);
 
-  const toggleMessageCategories = () => {
-    setIsMessageCategoriesExpanded(!isMessageCategoriesExpanded);
-  };
+  const Message_Categories = [
+    { title: "My works", BgColor: "#79d861" },
+    { title: "Accountant", BgColor: "#c43c5d" },
+    { title: "Works", BgColor: "#ff5050" },
+    { title: "Marketing", BgColor: "#42ffdd" },
+  ];
+
+  const Recent_chat_Categories = [
+    { title: "recent chat1", BgColor: "#79d861" },
+    { title: "recent chat2", BgColor: "#c43c5d" },
+    { title: "recent chat3", BgColor: "#ff5050" },
+  ];
 
   return (
     <div className="div">
@@ -56,17 +65,12 @@ const Sidebar = () => {
             <span className="tooltip">Home</span>
           </li>
           {isRoleFranchise && (
-            <li
-              onClick={toggleSidebar}
-              className="features-item inbox active"
-            >
+            <li onClick={toggleSidebar} className="features-item inbox active">
               <Drafts
                 style={IconSize()}
                 className="bx bxs-inbox features-item-icon inbox-icon"
               />
-              <span className="features-item-text">
-                Franchise registration
-              </span>
+              <span className="features-item-text">Franchise registration</span>
               <span className="tooltip">Franchise registration</span>
             </li>
           )}
@@ -103,69 +107,14 @@ const Sidebar = () => {
             <span className="tooltip">Spam</span>
           </li>
         </ul>
-        <ul className="category-list">
-          <div className="category-header" onClick={toggleMessageCategories} style={{ cursor: "pointer" }}>
-            Message categories
-            <KeyboardArrowDownIcon style={IconSize()} />
-          </div>
-          <ul className={`category-items ${isMessageCategoriesExpanded ? 'expanded' : 'collapsed'}`}>
-            <li className="category-item">
-              <span
-                className="category-item-status"
-                style={{ backgroundColor: "#79d861" }}
-              ></span>
-              <span className="category-item-text">My works</span>
-              <span className="tooltip">My works</span>
-            </li>
-            <li className="category-item">
-              <span
-                className="category-item-status"
-                style={{ backgroundColor: "#c43c5d" }}
-              ></span>
-              <span className="category-item-text">Accountant</span>
-              <span className="tooltip">Accountant</span>
-            </li>
-            <li className="category-item">
-              <span
-                className="category-item-status"
-                style={{ backgroundColor: "#ff5050" }}
-              ></span>
-              <span className="category-item-text">Works</span>
-              <span className="tooltip">Works</span>
-            </li>
-            <li className="category-item">
-              <span
-                className="category-item-status"
-                style={{ backgroundColor: "#42ffdd" }}
-              ></span>
-              <span className="category-item-text">Marketing</span>
-              <span className="tooltip">Marketing</span>
-            </li>
-          </ul>
-        </ul>
-        <ul className="chat-list">
-          <div className="chat-header">Recent chats</div>
-          <li className="chat-item">
-            <span className="chat-item-avatar-wrapper has-message">
-              <img
-                src="chris-evans.jpg"
-                alt="avatar"
-                className="chat-item-avatar"
-              />
-            </span>
-            <span className="chat-item-name">Steve Rogers</span>
-          </li>
-          <li className="chat-item">
-            <span className="chat-item-avatar-wrapper">
-              <img
-                src="tony-stark.jpg"
-                alt="avatar"
-                className="chat-item-avatar"
-              />
-            </span>
-            <span className="chat-item-name">Tony Stark</span>
-          </li>
-        </ul>
+        <MessageCategories
+          categorieName={"MESSAGE CATEGORIES"}
+          Categories={Message_Categories}
+        />
+        <MessageCategories
+          categorieName={"RECENT CHATS"}
+          Categories={Recent_chat_Categories}
+        />
       </div>
     </div>
   );

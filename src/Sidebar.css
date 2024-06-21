@@ -431,7 +431,7 @@ margin-right: 10px;
   list-style: none;
   font-weight: 500;
   border-bottom: 1px solid #292932;
-  max-height: 200px; /* Initial height when collapsed */
+  max-height: fit-content; /* Initial height when collapsed */
   overflow: hidden;
   opacity: 1;
   transition: max-height 0.3s ease, opacity 0.3s ease; /* Smooth transitions */
@@ -455,7 +455,7 @@ margin-right: 10px;
   white-space: nowrap;
 }
 .category-items.expanded {
-  max-height: 500px; /* Adjust as needed */
+  max-height: 600px; /* Adjust as needed */
   opacity: 1;
   transition: max-height 0.3s ease, opacity 0.3s ease;
 }
