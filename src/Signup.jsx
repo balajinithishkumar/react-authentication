@@ -1,12 +1,18 @@
 // Signup.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import RoleSelect from "./RoleSelect";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 
+import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import generateRandomPassword from "./functions/generateRandomPassword"
+import sendTemporaryPassword from "./functions/sendTemporaryPassword";
 function Signup() {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
@@ -18,6 +24,13 @@ function Signup() {
   const toggleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
+ async function sendMail() {
+   const generatedpassword = await generateRandomPassword(12);
+   localStorage.setItem("tempPassword", generatedpassword)
+   navigate("/resetpassword")
+  //  const temporarypassword = await sendTemporaryPassword(12);
+  }
 
   const createUser = async (data) => {
     console.log(data.Email);
@@ -97,7 +110,7 @@ function Signup() {
                       },
                     })}
                   />
-                  <img src="person.svg" alt="" />
+                 <PermIdentityOutlinedIcon />
                 </div>
                 {errors.Name && <p className="error">{errors.Name.message}</p>}
               </div>
@@ -123,7 +136,7 @@ function Signup() {
                       },
                     })}
                   />
-                  <img src="email.svg" alt="" />
+                  <EmailOutlinedIcon/>
                 </div>
                 {errors.Email && (
                   <p className="error">{errors.Email.message}</p>
@@ -144,12 +157,16 @@ function Signup() {
                       },
                     })}
                   />
-                  <img
-                    src={showPassword ? "hide.svg" : "show.svg"}
-                    alt=""
+                  <div
+                    style={{ cursor: "pointer",display:"flex", alignItems:"center" }}
                     onClick={toggleShowPassword}
-                    style={{ cursor: "pointer" }}
-                  />
+                  >
+                    {!showPassword ? (
+                      <RemoveRedEyeOutlinedIcon />
+                    ) : (
+                      <VisibilityOffOutlinedIcon />
+                    )}
+                  </div>
                 </div>
                 {errors.password && (
                   <p className="error">{errors.password.message}</p>
@@ -164,6 +181,11 @@ function Signup() {
                 <p
                   className="forgot_password"
                   style={{ color: "red", fontWeight: 500 }}
+                  onClick={
+                    () => {
+                       sendMail( )
+                    }
+                  }
                 >
                   Forgot password?
                 </p>

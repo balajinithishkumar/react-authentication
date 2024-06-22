@@ -44,6 +44,7 @@ const Sidebar = () => {
 
   return (
     <div className="div">
+        <Profile/>
       <div className={`side-bar ${isCollapsed ? "collapse" : ""}`}>
         <header className="logo-name-wrapper">
           <div className="logo-name">
@@ -116,7 +117,6 @@ const Sidebar = () => {
           categorieName={"RECENT CHATS"}
           Categories={Recent_chat_Categories}
         />
-        <Profile/>
       </div>
     </div>
   );

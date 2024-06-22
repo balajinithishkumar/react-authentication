@@ -1,5 +1,4 @@
-// App.js
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,6 +12,7 @@ import Login from './Login';
 import Home from './Home';
 import FranchiseRegistration from './FranchiseRegistration';
 import roles from './roles';
+import ResetPassword from './ResetPassword';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +30,11 @@ function App() {
     <Router>
       <div className="app">
         <Routes>
+        <Route
+            path="/resetpassword"
+            element= {<ResetPassword/>}
+            // element={!user ? <ResetPassword /> : <Navigate to="/" />}
+          />
           <Route
             path="/signup"
             element={!user ? <Signup /> : <Navigate to="/" />}

@@ -21,6 +21,7 @@ body {
   color: var(--white-color);
   height: 100vh;
   background-color: #fafafa;
+  position: relative;
 }
 
 .lead {
@@ -153,6 +154,7 @@ body {
   margin-left: 15px; /* Adjusted to pixels */
   transition: opacity 0.6s ease;
   opacity: 1;
+  white-space:nowrap;
 }
 
 .inbox-number {

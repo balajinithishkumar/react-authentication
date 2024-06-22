@@ -2,12 +2,16 @@
   display: flex;
   flex-direction: column;
   background-color: #232627;
-  width: 100%;
+  width: fit-content;
   height: fit-content;
   margin-top: 30px;
   border-radius: 10px;
   padding: 5px;
   gap: 10px;
+  position: absolute;
+  bottom: 40px;
+  z-index: 1;
+  left: 23px;
 }
 .profile_information {
   display: flex;
