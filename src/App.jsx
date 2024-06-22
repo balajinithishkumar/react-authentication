@@ -1,37 +1,27 @@
+// App.js
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-} from "react-router-dom";
-import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
-import Signup from "./Signup";
-import Login from "./Login";
-import Home from "./Home";
-import FranchiseRegistration from "./FranchiseRegistration";
-import roles from "./roles";
+} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { initializeAuth } from './actions';
+import Signup from './Signup';
+import Login from './Login';
+import Home from './Home';
+import FranchiseRegistration from './FranchiseRegistration';
+import roles from './roles';
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState(null); // Add state for role
+  const dispatch = useDispatch();
+  const { user, role, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      if (user) {
-        // Mocking role fetching, replace with actual role fetching logic
-        const userRole = roles.FRANCHISE; // Replace with actual role
-        setRole(userRole);
-      } else {
-        setRole(null);
-      }
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
+    dispatch(initializeAuth());
+  }, [dispatch]);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -51,7 +41,7 @@ function App() {
           <Route
             path="/franchiseregistration"
             element={
-              user && (role === roles.FRANCHISE) == "Franchise" ? (
+              user && role === roles.FRANCHISE ? (
                 <FranchiseRegistration />
               ) : (
                 <Navigate to="/" />
@@ -67,5 +57,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

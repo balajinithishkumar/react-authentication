@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
+
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 function Login() {
   const [user, setUser] = useState(null);
   const [signinemail, setsigninEmail] = useState("");
   const [signinpassword, setsigninPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const toggleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
@@ -110,7 +113,7 @@ function Login() {
                       },
                     })}
                   />
-                  <img src="email.svg" alt="" />
+                  <EmailOutlinedIcon />
                 </div>
                 {errors.Email && (
                   <p className="error">{errors.Email.message}</p>
@@ -120,7 +123,7 @@ function Login() {
                 <p>Password</p>
                 <div className="input_svg">
                   <input
-                    type={showPassword ? "text" : "password"}
+                    type={!showPassword ? "text" : "password"}
                     onChange={(e) => setsigninPassword(e.target.value)}
                     placeholder="Password"
                     {...register("password", {
@@ -131,11 +134,16 @@ function Login() {
                       },
                     })}
                   />
-                  <img
-                    src={showPassword ? "hide.svg" : "show.svg"}
+                  <div
+                    style={{ cursor: "pointer",display:"flex", alignItems:"center" }}
                     onClick={toggleShowPassword}
-                    style={{ cursor: "pointer" }}
-                  />
+                  >
+                    {!showPassword ? (
+                      <RemoveRedEyeOutlinedIcon />
+                    ) : (
+                      <VisibilityOffOutlinedIcon />
+                    )}
+                  </div>
                 </div>
                 {errors.password && (
                   <p className="error">{errors.password.message}</p>

@@ -27,7 +27,7 @@ function Profile() {
       <div
         className="logout"
         onClick={() => {
-          // handleLogout();
+          handleLogout();
         }}
       >
         Logout

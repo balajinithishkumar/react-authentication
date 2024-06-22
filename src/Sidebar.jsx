@@ -4,6 +4,7 @@ import "./Sidebar.css";
 import { Inbox, Drafts, Star, Send, Delete, Report } from "@mui/icons-material";
 import StartIcon from "@mui/icons-material/Start";
 import MessageCategories from "./MessageCategories";
+import Profile from "./Profile";
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isRoleFranchise, setIsRoleFranchise] = useState(
@@ -115,6 +116,7 @@ const Sidebar = () => {
           categorieName={"RECENT CHATS"}
           Categories={Recent_chat_Categories}
         />
+        <Profile/>
       </div>
     </div>
   );
