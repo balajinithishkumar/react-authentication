@@ -7,12 +7,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import RoleSelect from "./RoleSelect";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import generateRandomPassword from "./functions/generateRandomPassword"
-import sendTemporaryPassword from "./functions/sendTemporaryPassword";
+
 function Signup() {
   const [name, setName] = useState("");
   const [user, setUser] = useState(null);
