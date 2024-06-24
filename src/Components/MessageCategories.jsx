@@ -1,7 +1,6 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState } from "react";
-
-function MessageCategories({ categorieName ,Categories}) {
+function MessageCategories({ categorieName, Categories }) {
   const [isMessageCategoriesExpanded, setIsMessageCategoriesExpanded] =
     useState(false);
   const toggleMessageCategories = () => {

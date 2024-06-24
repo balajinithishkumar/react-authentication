@@ -126,7 +126,8 @@
   gap: 20px;
   border: 1px solid rgb(236, 234, 234);
   border-radius: 30px;
-  padding: 5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   background-color: transparent !important;
   color: black !important;
   transition: background-color 0.3s ease;
@@ -142,6 +143,7 @@
   align-items: center;
   gap: 20px;
 }
+
 .btLine line {
   height: 1px;
   background-color: rgb(236, 234, 234);

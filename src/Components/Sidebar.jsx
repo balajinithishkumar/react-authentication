@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import "./reset.css";
-import "./Sidebar.css";
+import "../Styles/reset.css";
+import "../Styles/Sidebar.css";
 import { Inbox, Drafts, Star, Send, Delete, Report } from "@mui/icons-material";
 import StartIcon from "@mui/icons-material/Start";
 import MessageCategories from "./MessageCategories";
 import Profile from "./Profile";
+import {useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isRoleFranchise, setIsRoleFranchise] = useState(
@@ -14,6 +15,7 @@ const Sidebar = () => {
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
+  const navigate = useNavigate();
 
   function IconSize() {
     return {
@@ -72,7 +74,9 @@ const Sidebar = () => {
                 style={IconSize()}
                 className="bx bxs-inbox features-item-icon inbox-icon"
               />
-              <span className="features-item-text">Franchise registration</span>
+              <span className="features-item-text" onClick={() => {
+               navigate("/franchiseregistration")
+              }}>Franchise registration</span>
               <span className="tooltip">Franchise registration</span>
             </li>
           )}

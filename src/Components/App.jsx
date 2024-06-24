@@ -6,25 +6,23 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { initializeAuth } from './actions';
+import { initializeAuth } from '../ReduxFunctions/actions';
 import Signup from './Signup';
 import Login from './Login';
 import Home from './Home';
 import FranchiseRegistration from './FranchiseRegistration';
-import roles from './roles';
+import roles from '../roles';
 import ResetPassword from './ResetPassword';
-
+import Loading from './Loading';
 function App() {
   const dispatch = useDispatch();
   const { user, role, loading } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(initializeAuth());
   },[dispatch]);
-
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><Loading/></div>;
   }
-
   return (
     <Router>
       <div className="app">
@@ -32,7 +30,6 @@ function App() {
         <Route
             path="/resetpassword"
             element= {<ResetPassword/>}
-            // element={!user ? <ResetPassword /> : <Navigate to="/" />}
           />
           <Route
             path="/signup"
@@ -61,5 +58,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

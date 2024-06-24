@@ -1,25 +1,21 @@
-// src/components/ResetPassword.js
 import { useState } from "react";
-import { auth } from "./firebase"; // Adjust the path as per your project structure
+import { auth } from "../firebase"; 
 import { sendPasswordResetEmail } from "firebase/auth";
-import "./ResetPassword.css"; // Import CSS file for styling
+import "../Styles/ResetPassword.css";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
-
   const handleResetPassword = async (e) => {
     e.preventDefault();
-
     try {
       await sendPasswordResetEmail(auth, email);
       alert("Password reset email sent. Check your inbox.");
-      setEmail(""); // Clear email input after sending email
+      setEmail(""); 
     } catch (error) {
       console.error("Error sending reset email:", error);
       alert("Error sending reset email");
     }
   };
-
   return (
     <div className="reset_password_wrapper">
       <div className="reset-password-container">

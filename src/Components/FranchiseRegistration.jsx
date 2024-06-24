@@ -1,11 +1,6 @@
 import { useForm, Controller } from "react-hook-form";
-import "./FranchiseRegistration.css";
+import "../Styles/FranchiseRegistration.css";
 import axios from "axios";
-const roles = [
-  { value: "admin", label: "Admin" },
-  { value: "user", label: "User" },
-  { value: "franchise", label: "Franchise Registration" },
-];
 
 const FranchiseRegistration = () => {
   const {
@@ -27,7 +22,6 @@ const FranchiseRegistration = () => {
       Start_Date: data.startDate,
       End_Date: data.endDate,
     };
-    console.log(data);
     axios
       .post(
         "https://sheet.best/api/sheets/bd4a591e-9060-4683-8a2b-99a27305b6b1",
@@ -140,7 +134,7 @@ const FranchiseRegistration = () => {
               rules={{
                 required: "Pin Code is required",
                 pattern: {
-                  value: /^[0-9]{6}$/, // Example pattern for 6-digit numeric pin code
+                  value: /^[0-9]{6}$/,
                   message: "Enter a valid 6-digit pin code",
                 },
               }}

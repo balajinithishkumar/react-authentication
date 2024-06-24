@@ -1,0 +1,3 @@
+Firebase: Error (auth/popup-closed-by-user).
+
+Firebase: Error (auth/cancelled-popup-request).

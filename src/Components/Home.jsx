@@ -1,5 +1,4 @@
 import Sidebar from "./Sidebar";
-
 function Home() {
   return (
     <div>
@@ -7,5 +6,4 @@ function Home() {
     </div>
   );
 }
-
 export default Home;

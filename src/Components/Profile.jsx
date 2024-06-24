@@ -1,18 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { auth } from "./firebase";
+import { auth } from "../firebase";
 import { Logout } from "@mui/icons-material";
-import "./Profile.css"
+import "../Styles/Profile.css"
 import {useSelector } from 'react-redux';
-
 function Profile() {  
-
   const navigate = useNavigate();
-  // const {user}  = useSelector((state) => state.user);
-  const { user, role, loading } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
 console.log(user)
   const handleLogout = async () => {
     try {
       await auth.signOut();
+      localStorage.removeItem("role");
       navigate("/login");
     } catch (error) {
       console.error("Error signing out:", error);
