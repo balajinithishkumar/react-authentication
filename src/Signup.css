@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 .signup-main {
   display: flex;
@@ -7,7 +7,6 @@
   background-color: #9a72c8;
   font-weight: 100;
   font-style: normal;
-
 }
 .signup input {
   border: none;
@@ -44,18 +43,20 @@
   flex-direction: column;
   gap: 40px;
 }
+
 .signup-text {
   font-size: 35px;
   font-weight: 600;
-
   color: rgb(54, 49, 49);
 }
+
 .name,
 .email,
-.create-password, .role_label {
+.create-password,
+.role_label {
   color: #9d9d9a;
-  
 }
+
 .signup_btn {
   width: 100%;
   background-color: #8b48d6 !important;
@@ -67,12 +68,14 @@
   cursor: pointer;
   color: white;
 }
+
 .input_svg {
   display: flex;
   justify-content: space-between;
   border-bottom: 1.5px solid #8f8f8d;
   padding-bottom: 5px;
 }
+
 .input_svg .password_show {
   cursor: pointer;
 }
@@ -80,19 +83,23 @@
 .input_svg img {
   width: 18px;
 }
+
 .terms_privacy_policy {
   color: #b2b2af;
   position: absolute;
   bottom: 30px;
   font-size: small;
 }
+
 .input_svg {
   margin-top: 10px;
 }
+
 .signup_content2 {
   width: 40%;
   position: relative;
 }
+
 .watch_demo {
   background-color: #8b48d6;
   color: black;
@@ -110,6 +117,42 @@
 
 .watch_demo:hover {
   background-color: #a156f7;
+}
+
+.signinwithgoogle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  border: 1px solid rgb(236, 234, 234);
+  border-radius: 30px;
+  padding: 5px;
+  background-color: transparent !important;
+  color: black !important;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.signinwithgoogle:hover {
+  background-color: rgb(235, 235, 235) !important;
+}
+
+.btLine {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.btLine line {
+  height: 1px;
+  background-color: rgb(236, 234, 234);
+  width: 100%;
+}
+.btLine p {
+  white-space: nowrap;
+  color: rgb(187, 182, 182);
+}
+.googleLogo {
+  width: 25px;
 }
 
 .domain_name {
@@ -153,6 +196,8 @@ span a {
 }
 .login_text {
   font-weight: 500;
+  margin-left: auto;
+  margin-right: auto;
 }
 .remember_forgot_password {
   display: flex;
@@ -183,14 +228,10 @@ span a {
 form {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 30px;
 }
 .error {
   color: red;
-}
-
-.formField {
-  margin-bottom: 15px;
 }
 
 .error {

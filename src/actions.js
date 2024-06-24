@@ -7,8 +7,8 @@ export const initializeAuth = () => (dispatch) => {
   dispatch(setLoading(true));
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      dispatch(setUser(user));
-      const userRole = roles.FRANCHISE; // Replace with actual role fetching logic
+      dispatch(setUser({uid:user.uid, emailId:user.email, displayName :user.displayName}));
+      const userRole = roles.FRANCHISE; 
       dispatch(setRole(userRole));
     } else {
       dispatch(setUser(null));

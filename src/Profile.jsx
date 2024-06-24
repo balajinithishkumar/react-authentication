@@ -2,8 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "./firebase";
 import { Logout } from "@mui/icons-material";
 import "./Profile.css"
-function Profile() {
+import {useSelector } from 'react-redux';
+
+function Profile() {  
+
   const navigate = useNavigate();
+  // const {user}  = useSelector((state) => state.user);
+  const { user, role, loading } = useSelector((state) => state.user);
+console.log(user)
   const handleLogout = async () => {
     try {
       await auth.signOut();
@@ -20,8 +26,8 @@ function Profile() {
           <img src="tony-stark.jpg" alt="" />
         </div>
         <div className="username_email_id">
-          <p>Tran Mau Tri Tam</p>
-          <mail>tam@ui.net</mail>
+          <p>{user?.displayName ? user?.displayName : "username"} </p>
+          <mail>{user?.emailId ? user?.emailId :  "email id"}</mail>
         </div>
       </div>
       <div

@@ -25,7 +25,6 @@ const userSlice = createSlice({
 });
 
 export const { setUser, setRole, setLoading } = userSlice.actions;
-
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,

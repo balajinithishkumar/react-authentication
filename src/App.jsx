@@ -17,10 +17,9 @@ import ResetPassword from './ResetPassword';
 function App() {
   const dispatch = useDispatch();
   const { user, role, loading } = useSelector((state) => state.user);
-
   useEffect(() => {
     dispatch(initializeAuth());
-  }, [dispatch]);
+  },[dispatch]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -62,4 +61,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;

@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 const roles = [
   { value: 'admin', label: 'Admin' },
   { value: 'user', label: 'User' },
-  { value: 'franchise', label: 'Franchise' },
+  { value: 'Franchise', label: 'Franchise' },
 ];
 
 const RoleSelect = ({ control, errors }) => {

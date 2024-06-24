@@ -1,51 +1,51 @@
 // Signup.jsx
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "./firebase";
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import RoleSelect from "./RoleSelect";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
+import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import generateRandomPassword from "./functions/generateRandomPassword"
+import { useDispatch, useSelector } from "react-redux";
 
 function Signup() {
   const [name, setName] = useState("");
-  const [user, setUser] = useState(null);
+  const [user_auth, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const googleProvider = new GoogleAuthProvider();
+
   const navigate = useNavigate();
   const toggleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
- async function sendMail() {
-   const generatedpassword = await generateRandomPassword(12);
-   localStorage.setItem("tempPassword", generatedpassword)
-   navigate("/resetpassword")
-  //  const temporarypassword = await sendTemporaryPassword(12);
-  }
+  const { user, role, loading } = useSelector((state) => state.user);
+  console.log(user, role, loading);
 
   const createUser = async (data) => {
-    console.log(data.Email);
-    console.log(data.password);
-    console.log(data.Name);
-    console.log(data.role);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         data.Email,
         data.password
       );
+
       setUser(userCredential.user);
       setErrorMessage("");
+
       // Store the role in localStorage
-      localStorage.setItem('role', data.role);
+      localStorage.setItem("role", data.role);
       navigate("/");
     } catch (error) {
       const errorCode = error.code;
@@ -68,7 +68,20 @@ function Signup() {
       console.error(errorCode);
     }
   };
-
+  function signinwithgoogle() {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        setUser(result.user);
+        setErrorMessage("");
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const message = error.message;
+        setErrorMessage(message);
+        console.error(errorCode, message);
+      });
+  }
   const {
     register,
     handleSubmit,
@@ -109,7 +122,7 @@ function Signup() {
                       },
                     })}
                   />
-                 <PermIdentityOutlinedIcon />
+                  <PermIdentityOutlinedIcon />
                 </div>
                 {errors.Name && <p className="error">{errors.Name.message}</p>}
               </div>
@@ -135,7 +148,7 @@ function Signup() {
                       },
                     })}
                   />
-                  <EmailOutlinedIcon/>
+                  <EmailOutlinedIcon />
                 </div>
                 {errors.Email && (
                   <p className="error">{errors.Email.message}</p>
@@ -157,7 +170,11 @@ function Signup() {
                     })}
                   />
                   <div
-                    style={{ cursor: "pointer",display:"flex", alignItems:"center" }}
+                    style={{
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
                     onClick={toggleShowPassword}
                   >
                     {!showPassword ? (
@@ -180,11 +197,9 @@ function Signup() {
                 <p
                   className="forgot_password"
                   style={{ color: "red", fontWeight: 500 }}
-                  onClick={
-                    () => {
-                       sendMail( )
-                    }
-                  }
+                  onClick={() => {
+                    sendMail();
+                  }}
                 >
                   Forgot password?
                 </p>
@@ -196,6 +211,17 @@ function Signup() {
                 className="signup_btn"
                 onClick={handleSubmit(onSubmit)}
               />
+
+              <div className="btLine"> <line></line> <p>or Sign in with Email</p><line></line></div>
+              <div
+                type="submit"
+                style={{ fontWeight: 500, color: "white" }}
+                className="signinwithgoogle"
+                onClick={signinwithgoogle}
+              >
+                <img className="googleLogo" src="Google_logo.svg" alt="" /> Sign
+                in with Google
+              </div>
             </form>
             <p className="login_text">
               Already have an account? <Link to="/login">Login</Link>

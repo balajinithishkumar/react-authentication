@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "./firebase";
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(true);
+  const googleProvider = new GoogleAuthProvider();
   const toggleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
@@ -51,7 +52,24 @@ function Login() {
         setErrorMessage(message);
         console.error(errorCode, message);
       });
+    
   }
+  
+  function signinwithgoogle() {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        setUser(result.user);
+        setErrorMessage("");
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const message = error.message;
+        setErrorMessage(message);
+        console.error(errorCode, message);
+      });
+  }
+
   const {
     register,
     handleSubmit,
@@ -60,7 +78,7 @@ function Login() {
   const onSubmit = (data) => {
     signinUser(data);
   };
-  console.log(errors);
+
   return (
     <div className="signup-main">
       <div className="signupContent">
@@ -134,7 +152,11 @@ function Login() {
                     })}
                   />
                   <div
-                    style={{ cursor: "pointer",display:"flex", alignItems:"center" }}
+                    style={{
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
                     onClick={toggleShowPassword}
                   >
                     {!showPassword ? (
@@ -154,6 +176,17 @@ function Login() {
                 className="signup_btn"
                 onClick={handleSubmit(onSubmit)}
               />
+              <div className="btLine"> <line></line> <p>or Sign in with Email</p><line></line></div>
+
+              <div
+                type="submit"
+                style={{ fontWeight: 500, color: "white" }}
+                className="signinwithgoogle"
+                onClick={signinwithgoogle}
+              >
+                <img className="googleLogo" src="Google_logo.svg" alt="" /> Sign
+                in with Google
+              </div>
             </form>
           </div>
           <div className="terms_privacy_policy">
