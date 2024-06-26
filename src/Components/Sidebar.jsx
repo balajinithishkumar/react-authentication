@@ -32,10 +32,9 @@ const Sidebar = () => {
   }, []);
 
   const Message_Categories = [
-    { title: "My works", BgColor: "#79d861" },
-    { title: "Accountant", BgColor: "#c43c5d" },
-    { title: "Works", BgColor: "#ff5050" },
-    { title: "Marketing", BgColor: "#42ffdd" },
+    { title: "DHL", BgColor: "#79d861" },
+    { title: "ARAMEX", BgColor: "#c43c5d" },
+    { title: "UPS", BgColor: "#ff5050" },
   ];
 
   const Recent_chat_Categories = [
@@ -114,7 +113,7 @@ const Sidebar = () => {
           </li>
         </ul>
         <MessageCategories
-          categorieName={"MESSAGE CATEGORIES"}
+          categorieName={"vendor"}
           Categories={Message_Categories}
         />
         <MessageCategories

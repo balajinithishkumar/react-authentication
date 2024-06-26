@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { openDB } from 'idb';
-import '../Styles/Datafeatching.css';
+import '../Styles/Datafetched.css';
 
 const DB_NAME = 'DataDB';
 const STORE_NAME = 'DataStore';
@@ -33,11 +33,12 @@ function DataFetching() {
         }
       },
     });
-    
+
     const tx = db.transaction(STORE_NAME, 'readwrite');
     const store = tx.objectStore(STORE_NAME);
     data.forEach((item) => store.put(item));
     await tx.done;
+    
   };
 
   const fetchDataFromIndexedDB = async () => {
@@ -79,7 +80,7 @@ function DataFetching() {
   }
 
   return (
-    <div className="container table-container">
+    <div className="table-container">
       <table>
         <thead>
           <tr>

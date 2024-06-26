@@ -13,7 +13,7 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import {useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -23,7 +23,8 @@ function Signup() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const googleProvider = new GoogleAuthProvider();
-
+  const [selectedRole, setSelectedRole] = useState(""); // State to store selected role
+  console.log(selectedRole);
   const navigate = useNavigate();
   const toggleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -42,7 +43,7 @@ function Signup() {
 
       setUser(userCredential.user);
       setErrorMessage("");
-      localStorage.setItem("role", data.role);
+      localStorage.setItem("role", selectedRole); // Store selected role in localStorage
       navigate("/");
     } catch (error) {
       const errorCode = error.code;
@@ -65,6 +66,7 @@ function Signup() {
       console.error(errorCode);
     }
   };
+
   function signinwithgoogle() {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
@@ -79,6 +81,7 @@ function Signup() {
         console.error(errorCode, message);
       });
   }
+
   const {
     register,
     handleSubmit,
@@ -110,7 +113,7 @@ function Signup() {
                     {...register("Name", {
                       required: "Name is required",
                       minLength: {
-                        value: 10,
+                        value: 6,
                         message: "Name must be at least 10 characters long",
                       },
                       maxLength: {
@@ -185,8 +188,12 @@ function Signup() {
                   <p className="error">{errors.password.message}</p>
                 )}
               </div>
-              <RoleSelect control={control} errors={errors} />
-             
+              <RoleSelect
+                control={control}
+                errors={errors}
+                setSelectedRole={setSelectedRole} // Pass setSelectedRole to RoleSelect
+              />
+
               <input
                 type="submit"
                 style={{ fontWeight: 500, color: "white" }}
@@ -195,7 +202,11 @@ function Signup() {
                 onClick={handleSubmit(onSubmit)}
               />
 
-              <div className="btLine"> <line></line> <p>or Sign in with Email</p><line></line></div>
+              <div className="btLine">
+                {" "}
+                <line></line> <p>or Sign in with Email</p>
+                <line></line>
+              </div>
               <div
                 type="submit"
                 style={{ fontWeight: 500, color: "white" }}
