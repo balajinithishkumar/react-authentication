@@ -7,9 +7,23 @@ const FranchiseRegistration = () => {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm();
 
+ 
+  const formatDate = (date) => {
+    return new Date(date).toISOString().split('T')[0];
+  };
+  
   const onSubmit = (data) => {
+    const formattedStartDate = formatDate(data.startDate);
+    const formattedEndDate = formatDate(data.endDate);
+  
+    console.log("Original Start Date:", data.startDate);
+    console.log("Formatted Start Date:", formattedStartDate);
+    console.log("Original End Date:", data.endDate);
+    console.log("Formatted End Date:", formattedEndDate);
+  
     const datas = {
       Owner_Name: data.ownerName,
       Address_Line_1: data.addressLine1,
@@ -19,9 +33,10 @@ const FranchiseRegistration = () => {
       State: data.state,
       Country: data.country,
       Username: data.username,
-      Start_Date: data.startDate,
-      End_Date: data.endDate,
+      Start_Date: formattedStartDate,
+      End_Date: formattedEndDate,
     };
+  
     axios
       .post(
         "https://sheet.best/api/sheets/bd4a591e-9060-4683-8a2b-99a27305b6b1",
@@ -29,12 +44,13 @@ const FranchiseRegistration = () => {
       )
       .then((response) => {
         console.log(response);
+        reset();
       });
   };
-  console.log(errors);
+  
   return (
     <div className="container">
-      <h1  >Franchise Registration</h1>
+      <h1>Franchise Registration</h1>
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="gridContainer">
           {/* Owner Name */}
@@ -72,7 +88,6 @@ const FranchiseRegistration = () => {
             />
           </div>
 
-          {/* Address Line 1 */}
           <div className="formField">
             <label htmlFor="addressLine1">Address Line 1</label>
             <Controller
@@ -98,7 +113,6 @@ const FranchiseRegistration = () => {
               )}
             />
           </div>
-          {/* Address Line 2 */}
           <div className="formField">
             <label htmlFor="addressLine2">Address Line 2</label>
             <Controller
@@ -124,7 +138,6 @@ const FranchiseRegistration = () => {
               )}
             />
           </div>
-          {/* Pin Code */}
           <div className="formField">
             <label htmlFor="pinCode">Pin Code</label>
             <Controller
@@ -155,7 +168,6 @@ const FranchiseRegistration = () => {
             />
           </div>
 
-          {/* City */}
           <div className="formField">
             <label htmlFor="city">City</label>
             <Controller
@@ -180,7 +192,6 @@ const FranchiseRegistration = () => {
             />
           </div>
 
-          {/* State */}
           <div className="formField">
             <label htmlFor="state">State</label>
             <Controller
@@ -205,7 +216,6 @@ const FranchiseRegistration = () => {
             />
           </div>
 
-          {/* Country */}
           <div className="formField">
             <label htmlFor="country">Country</label>
             <Controller
@@ -230,7 +240,6 @@ const FranchiseRegistration = () => {
             />
           </div>
 
-          {/* Username */}
           <div className="formField">
             <label htmlFor="username">Username</label>
             <Controller
@@ -254,6 +263,7 @@ const FranchiseRegistration = () => {
               )}
             />
           </div>
+          
 
           {/* Start Date */}
           <div className="formField">
