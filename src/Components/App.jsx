@@ -60,13 +60,11 @@
 // }
 // export default App;
 
-
-
-import FranchiseRegistration from './FranchiseRegistration'
+import Datafeatching from './Datafeatching'
 
 function App() {
   return (
-   <FranchiseRegistration />
+  <Datafeatching />
   )
 }
 
