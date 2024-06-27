@@ -21,7 +21,6 @@ body {
   color: var(--white-color);
   height: 100vh;
   background-color: #fafafa;
-  position: relative;
 }
 
 .lead {
@@ -40,7 +39,6 @@ body {
   height: 100%;
   padding: 21px 12px; /* Adjusted to pixels */
   background-color: #17171e;
-  position: fixed;
   transition: width 0.5s ease; 
   top: 0;
 }
@@ -466,4 +464,14 @@ margin-right: 10px;
   max-height: 0;
   opacity: 0;
   transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Sidebar.css */
+.category-item.active .category-item-text {
+  font-weight: bold;
+  color: #8748D9;
+}
+
+.category-item.active .link {
+  color: #8748D9;
 }

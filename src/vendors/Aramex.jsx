@@ -3,7 +3,9 @@ import axios from "axios";
 import "../Styles/vendor.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../Components/Sidebar";
-const Ups = () => {
+import { fetchDataFromAPI } from "../Endpoints/fetchSheetsData";
+import urls from "../utils/urls";
+const Ara = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,22 +13,7 @@ const Ups = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchDataFromAPI = async () => {
-      try {
-        const response = await axios.get(
-          "https://sheet.best/api/sheets/0cd7742f-8919-45bf-983d-342cf41219a4"
-        );
-        setData(response.data);
-        setFilteredData(response.data);
-        setLoading(false);
-        console.log(response.data);
-      } catch (err) {
-        setError(err);
-        setLoading(false);
-      }
-    };
-
-    fetchDataFromAPI();
+    fetchDataFromAPI(setData, setFilteredData, setLoading, setError,urls.aramexURL);
   }, []);
 
   useEffect(() => {
@@ -89,4 +76,4 @@ const Ups = () => {
   );
 };
 
-export default Ups;
+export default Ara;

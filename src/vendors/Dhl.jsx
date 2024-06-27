@@ -3,7 +3,7 @@ import axios from "axios";
 import "../Styles/vendor.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../Components/Sidebar";
-const Ups = () => {
+const Dhl = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -89,4 +89,4 @@ const Ups = () => {
   );
 };
 
-export default Ups;
+export default Dhl;

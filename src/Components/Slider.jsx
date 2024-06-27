@@ -3,5 +3,4 @@ function Slider() {
     <div>Slider</div>
   )
 }
-
 export default Slider

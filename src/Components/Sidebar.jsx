@@ -5,17 +5,16 @@ import { Inbox, Drafts, Star, Send, Delete, Report } from "@mui/icons-material";
 import StartIcon from "@mui/icons-material/Start";
 import MessageCategories from "./MessageCategories";
 import Profile from "./Profile";
-import {useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isRoleFranchise, setIsRoleFranchise] = useState(
     localStorage.getItem("role") == "franchise" ? true : false
   );
 
-  const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
-  };
+  const [activeCategory, setActiveCategory] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   function IconSize() {
     return {
@@ -31,10 +30,23 @@ const Sidebar = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.includes("/dhl")) {
+      setActiveCategory("DHL");
+    } else if (path.includes("/aramex")) {
+      setActiveCategory("ARAMEX");
+    } else if (path.includes("/ups")) {
+      setActiveCategory("UPS");
+    } else {
+      setActiveCategory("");
+    }
+  }, [location]);
+
   const Message_Categories = [
-    { title: "DHL", BgColor: "#79d861" },
-    { title: "ARAMEX", BgColor: "#c43c5d" },
-    { title: "UPS", BgColor: "#ff5050" },
+    { title: "DHL", BgColor: "#79d861", link: "/dhl" },
+    { title: "ARAMEX", BgColor: "#c43c5d", link: "/aramex" },
+    { title: "UPS", BgColor: "#ff5050", link: "/ups" },
   ];
 
   const Recent_chat_Categories = [
@@ -45,13 +57,13 @@ const Sidebar = () => {
 
   return (
     <div className="div">
-        <Profile/>
-      <div className={`side-bar ${isCollapsed ? "collapse" : ""}`}>
+      <Profile />
+      <div className={`side-bar`}>
         <header className="logo-name-wrapper">
           <div className="logo-name">
             <img src="logo.svg" className="logo" alt="logo app" />
           </div>
-          <button className="logo-name__button" onClick={toggleSidebar}>
+          <button className="logo-name__button">
             <StartIcon
               className="bx bxs-plus-circle chat-icon"
               style={IconSize()}
@@ -59,7 +71,7 @@ const Sidebar = () => {
           </button>
         </header>
         <ul className="features-list">
-          <li onClick={toggleSidebar} className="features-item inbox active">
+          <li className="features-item inbox active">
             <Inbox
               style={IconSize()}
               className="bx bxs-inbox features-item-icon inbox-icon"
@@ -68,18 +80,23 @@ const Sidebar = () => {
             <span className="tooltip">Home</span>
           </li>
           {isRoleFranchise && (
-            <li onClick={toggleSidebar} className="features-item inbox active">
+            <li className="features-item inbox active">
               <Drafts
                 style={IconSize()}
                 className="bx bxs-inbox features-item-icon inbox-icon"
               />
-              <span className="features-item-text" onClick={() => {
-               navigate("/franchiseregistration")
-              }}>Franchise registration</span>
+              <span
+                className="features-item-text"
+                onClick={() => {
+                  navigate("/franchiseregistration");
+                }}
+              >
+                Franchise registration
+              </span>
               <span className="tooltip">Franchise registration</span>
             </li>
           )}
-          <li onClick={toggleSidebar} className="features-item star">
+          <li className="features-item star">
             <Star
               style={IconSize()}
               className="bx bx-star features-item-icon"
@@ -115,10 +132,14 @@ const Sidebar = () => {
         <MessageCategories
           categorieName={"vendor"}
           Categories={Message_Categories}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
         />
         <MessageCategories
           categorieName={"RECENT CHATS"}
           Categories={Recent_chat_Categories}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
         />
       </div>
     </div>
