@@ -3,33 +3,49 @@ import axios from "axios";
 import "../Styles/vendor.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../Components/Sidebar";
-import { fetchDataFromAPI } from "../Endpoints/fetchSheetsData";
 import urls from "../utils/urls";
-const Ara = () => {
+
+const Aramex = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [columns, setColumns] = useState([]);
 
   useEffect(() => {
-    fetchDataFromAPI(setData, setFilteredData, setLoading, setError,urls.aramexURL);
+    const fetchDataFromAPI = async () => {
+      try {
+        const response = await axios.get(urls.aramexURL);
+        setData(response.data);
+        setFilteredData(response.data);
+        setColumns(Object.keys(response.data[0])); // Extract column names dynamically
+        setLoading(false);
+        console.log(response.data);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    fetchDataFromAPI();
   }, []);
 
   useEffect(() => {
     const results = data.filter((row) =>
-      row["Destination"].toLowerCase().includes(searchTerm.toLowerCase())
+      row[columns[0]]?.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredData(results);
-  }, [searchTerm, data]);
+  }, [searchTerm, data, columns]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
 
   const handleSort = () => {
+    if (columns.length === 0) return;
     const sortedData = [...filteredData].sort((a, b) => {
-      return a["Destination"].localeCompare(b["Destination"]);
+      return a[columns[0]].localeCompare(b[columns[0]]);
     });
     setFilteredData(sortedData);
   };
@@ -39,34 +55,29 @@ const Ara = () => {
 
   return (
     <div className="vendor_container">
-      <div>
-        <Sidebar />
-      </div>
-      <div>
+      <Sidebar />
+      <div className="vendor_table">
         <input
           type="text"
-          placeholder="Search by country"
+          placeholder={`Search by ${columns[0]}`}
           value={searchTerm}
           onChange={handleSearch}
         />
+        <button onClick={handleSort}>Sort by {columns[0]}</button>
         <table>
           <thead>
             <tr>
-              <th>Destination</th>
-              <th>Express Plus</th>
-              <th>Express</th>
-              <th>Express Saver</th>
-              <th>Expedited</th>
+              {columns.map((col, index) => (
+                <th key={index}>{col}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {filteredData.map((row, index) => (
               <tr key={index}>
-                <td>{row["Destination"]}</td>
-                <td>{row["Express Plus"]}</td>
-                <td>{row["Express"]}</td>
-                <td>{row["Express Saver"]}</td>
-                <td>{row["Expedited"]}</td>
+                {columns.map((col, colIndex) => (
+                  <td key={colIndex}>{row[col]}</td>
+                ))}
               </tr>
             ))}
           </tbody>
@@ -76,4 +87,4 @@ const Ara = () => {
   );
 };
 
-export default Ara;
+export default Aramex;
