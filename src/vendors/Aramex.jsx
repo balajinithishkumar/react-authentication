@@ -4,6 +4,7 @@ import "../Styles/vendor.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../Components/Sidebar";
 import urls from "../utils/urls";
+import { saveDataToIndexedDB, getDataFromIndexedDB } from "../utils/aramexindexedDB"
 
 const Aramex = () => {
   const [data, setData] = useState([]);
@@ -14,21 +15,32 @@ const Aramex = () => {
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
-    const fetchDataFromAPI = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(urls.aramexURL);
-        setData(response.data);
-        setFilteredData(response.data);
-        setColumns(Object.keys(response.data[0])); // Extract column names dynamically
-        setLoading(false);
-        console.log(response.data);
+        // Check if data is in IndexedDB
+        const cachedData = await getDataFromIndexedDB();
+        if (cachedData.length > 0) {
+          setData(cachedData);
+          setFilteredData(cachedData);
+          setColumns(Object.keys(cachedData[0])); // Extract column names dynamically
+          setLoading(false);
+        } else {
+          // Fetch from API if not cached
+          const response = await axios.get(urls.aramexURL);
+          setData(response.data);
+          setFilteredData(response.data);
+          setColumns(Object.keys(response.data[0])); // Extract column names dynamically
+          setLoading(false);
+          // Save to IndexedDB
+          saveDataToIndexedDB(response.data);
+        }
       } catch (err) {
         setError(err);
         setLoading(false);
       }
     };
 
-    fetchDataFromAPI();
+    fetchData();
   }, []);
 
   useEffect(() => {

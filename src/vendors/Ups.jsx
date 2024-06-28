@@ -3,6 +3,7 @@ import axios from "axios";
 import "../Styles/vendor.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../Components/Sidebar";
+import { saveDataToIndexedDB, getDataFromIndexedDB } from "../utils/upsindexedDB";
 import urls from "../utils/urls";
 
 const Ups = () => {
@@ -16,12 +17,24 @@ const Ups = () => {
   useEffect(() => {
     const fetchDataFromAPI = async () => {
       try {
-        const response = await axios.get(urls.dhlURL);
-        setData(response.data);
-        setFilteredData(response.data);
-        setColumns(Object.keys(response.data[0])); // Extract column names dynamically
-        setLoading(false);
-        console.log(response.data);
+        // Check if data is available in IndexedDB
+        const cachedData = await getDataFromIndexedDB();
+        if (cachedData.length > 0) {
+          setData(cachedData);
+          setFilteredData(cachedData);
+          setColumns(Object.keys(cachedData[0])); // Extract column names dynamically
+          setLoading(false);
+        } else {
+          // Fetch from API
+          const response = await axios.get(urls.upsURL);
+          setData(response.data);
+          setFilteredData(response.data);
+          setColumns(Object.keys(response.data[0])); // Extract column names dynamically
+          setLoading(false);
+          
+          // Save fetched data to IndexedDB
+          await saveDataToIndexedDB(response.data);
+        }
       } catch (err) {
         setError(err);
         setLoading(false);
@@ -55,9 +68,7 @@ const Ups = () => {
 
   return (
     <div className="vendor_container">
-      <div>
-        <Sidebar />
-      </div>
+      <Sidebar />
       <div className="vendor_table">
         <input
           type="text"
