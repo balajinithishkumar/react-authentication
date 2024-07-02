@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "../Styles/vendor.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../Components/Sidebar";
 import { saveDataToIndexedDB, getDataFromIndexedDB } from "../utils/upsindexedDB";
 import urls from "../utils/urls";
 
-const Ups = () => {
+const Dhl = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,15 +23,7 @@ const Ups = () => {
           setColumns(Object.keys(cachedData[0])); // Extract column names dynamically
           setLoading(false);
         } else {
-          // Fetch from API
-          const response = await axios.get(urls.upsURL);
-          setData(response.data);
-          setFilteredData(response.data);
-          setColumns(Object.keys(response.data[0])); // Extract column names dynamically
-          setLoading(false);
-          
-          // Save fetched data to IndexedDB
-          await saveDataToIndexedDB(response.data);
+          await fetchDataAndSaveToIndexedDB();
         }
       } catch (err) {
         setError(err);
@@ -41,7 +31,27 @@ const Ups = () => {
       }
     };
 
+    const fetchDataAndSaveToIndexedDB = async () => {
+      try {
+        const response = await axios.get(urls.upsURL);
+        setData(response.data);
+        setFilteredData(response.data);
+        setColumns(Object.keys(response.data[0])); // Extract column names dynamically
+        setLoading(false);
+        
+        // Save fetched data to IndexedDB
+        await saveDataToIndexedDB(response.data);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
     fetchDataFromAPI();
+
+    const intervalId = setInterval(fetchDataAndSaveToIndexedDB, 20000); // Refresh every 20 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
 
   useEffect(() => {
@@ -100,4 +110,4 @@ const Ups = () => {
   );
 };
 
-export default Ups;
+export default Dhl;

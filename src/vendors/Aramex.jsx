@@ -4,7 +4,7 @@ import "../Styles/vendor.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../Components/Sidebar";
 import urls from "../utils/urls";
-import { saveDataToIndexedDB, getDataFromIndexedDB } from "../utils/aramexindexedDB"
+import { saveDataToIndexedDB, getDataFromIndexedDB } from "../utils/aramexindexedDB";
 
 const Aramex = () => {
   const [data, setData] = useState([]);
@@ -26,13 +26,7 @@ const Aramex = () => {
           setLoading(false);
         } else {
           // Fetch from API if not cached
-          const response = await axios.get(urls.aramexURL);
-          setData(response.data);
-          setFilteredData(response.data);
-          setColumns(Object.keys(response.data[0])); // Extract column names dynamically
-          setLoading(false);
-          // Save to IndexedDB
-          saveDataToIndexedDB(response.data);
+          await fetchDataAndSaveToIndexedDB();
         }
       } catch (err) {
         setError(err);
@@ -40,7 +34,27 @@ const Aramex = () => {
       }
     };
 
+    const fetchDataAndSaveToIndexedDB = async () => {
+      try {
+        const response = await axios.get(urls.aramexURL);
+        setData(response.data);
+        setFilteredData(response.data);
+        setColumns(Object.keys(response.data[0])); // Extract column names dynamically
+        setLoading(false);
+        
+        // Save to IndexedDB
+        await saveDataToIndexedDB(response.data);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
     fetchData();
+
+    const intervalId = setInterval(fetchDataAndSaveToIndexedDB, 20000); // Refresh every 20 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../Components/Sidebar";
 import { saveDataToIndexedDB, getDataFromIndexedDB } from "../utils/dhlindexedDB";
@@ -23,15 +23,7 @@ const Dhl = () => {
           setColumns(Object.keys(cachedData[0])); // Extract column names dynamically
           setLoading(false);
         } else {
-          // Fetch from API
-          const response = await axios.get(urls.dhlURL);
-          setData(response.data);
-          setFilteredData(response.data);
-          setColumns(Object.keys(response.data[0])); // Extract column names dynamically
-          setLoading(false);
-          
-          // Save fetched data to IndexedDB
-          await saveDataToIndexedDB(response.data);
+          await fetchDataAndSaveToIndexedDB();
         }
       } catch (err) {
         setError(err);
@@ -39,7 +31,27 @@ const Dhl = () => {
       }
     };
 
+    const fetchDataAndSaveToIndexedDB = async () => {
+      try {
+        const response = await axios.get(urls.dhlURL);
+        setData(response.data);
+        setFilteredData(response.data);
+        setColumns(Object.keys(response.data[0])); // Extract column names dynamically
+        setLoading(false);
+        
+        // Save fetched data to IndexedDB
+        await saveDataToIndexedDB(response.data);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
     fetchDataFromAPI();
+
+    const intervalId = setInterval(fetchDataAndSaveToIndexedDB, 20000); // Refresh every 20 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
 
   useEffect(() => {
