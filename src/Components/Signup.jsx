@@ -14,6 +14,7 @@ import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useSelector } from "react-redux";
+import { setRole } from "../ReduxFunctions/store";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -43,6 +44,7 @@ function Signup() {
 
       setUser(userCredential.user);
       setErrorMessage("");
+      setRole(selectedRole)
       localStorage.setItem("role", selectedRole); // Store selected role in localStorage
       navigate("/");
     } catch (error) {
