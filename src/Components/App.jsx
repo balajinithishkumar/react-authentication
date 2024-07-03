@@ -18,6 +18,7 @@ import Ups from "../vendors/Ups";
 import Dhl from "../vendors/Dhl";
 import Aramex from "../vendors/Aramex";
 import PrivateRouter from "./PrivateRoute";
+import AutoSignOut from "./AutoSignout";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,36 +38,38 @@ function App() {
 
   return (
     <Router>
-      <div className="app">
-        <Routes>
-          <Route
-            path="/login"
-            element={!user ? <Login /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/signup"
-            element={!user ? <Signup /> : <Navigate to="/" />}
-          />
-          <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route path="/ups" element={<Ups />} />
-          <Route path="/dhl" element={<Dhl />} />
-          <Route path="/aramex" element={<Aramex />} />
-          <Route path="/datafetched" element={<Datafetched />} />
-          <Route
-            path="/franchiseregistration"
-            element={
-              <PrivateRouter
-                element={FranchiseRegistration}
-                path="/franchiseregistration"
-              />
-            }
-          />
-          <Route
-            path="/"
-            element={<PrivateRouter element={Home} />}
-          />
-        </Routes>
-      </div>
+      <AutoSignOut timeoutMinutes={15}>
+        <div className="app">
+          <Routes>
+            <Route
+              path="/login"
+              element={!user ? <Login /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/signup"
+              element={!user ? <Signup /> : <Navigate to="/" />}
+            />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="/ups" element={<Ups />} />
+            <Route path="/dhl" element={<Dhl />} />
+            <Route path="/aramex" element={<Aramex />} />
+            <Route path="/datafetched" element={<Datafetched />} />
+            <Route
+              path="/franchiseregistration"
+              element={
+                <PrivateRouter
+                  element={FranchiseRegistration}
+                  path="/franchiseregistration"
+                />
+              }
+            />
+            <Route
+              path="/"
+              element={<PrivateRouter element={Home} />}
+            />
+          </Routes>
+        </div>
+      </AutoSignOut>
     </Router>
   );
 }
