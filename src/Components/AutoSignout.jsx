@@ -1,8 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { auth } from '../firebase'; // Adjust the import based on your firebase setup
+import axios from 'axios';
+import urls from '../utils/urls';
+import { useSelector } from 'react-redux';
 
-const AutoSignOut = ({ children, timeoutMinutes = 15 }) => {
+const AutoSignOut = ({ children, timeoutSeconds = 10 }) => {
   const timeoutIdRef = useRef(null);
+  const { user, role, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
     const resetTimer = () => {
@@ -10,8 +14,20 @@ const AutoSignOut = ({ children, timeoutMinutes = 15 }) => {
         clearTimeout(timeoutIdRef.current);
       }
       const newTimeoutId = setTimeout(() => {
-        auth.signOut();
-      }, timeoutMinutes * 60 * 1000);
+        auth.signOut().then(result => {
+          const formattedTime = new Date()
+        axios
+        .post(urls.userStatus, {
+          Name: "name",
+          Time: formattedTime, 
+          Status: "Sign out",
+        })
+        .then((response) => {
+          console.log(response);
+        });
+        })
+
+      }, timeoutSeconds * 1000);
       timeoutIdRef.current = newTimeoutId;
     };
 
@@ -22,7 +38,6 @@ const AutoSignOut = ({ children, timeoutMinutes = 15 }) => {
     window.addEventListener('mousemove', handleActivity);
     window.addEventListener('keydown', handleActivity);
 
-    // Initialize the timer when the component mounts
     resetTimer();
 
     return () => {
@@ -32,7 +47,7 @@ const AutoSignOut = ({ children, timeoutMinutes = 15 }) => {
       window.removeEventListener('mousemove', handleActivity);
       window.removeEventListener('keydown', handleActivity);
     };
-  }, [timeoutMinutes]);
+  }, [timeoutSeconds]);
 
   return <>{children}</>;
 };

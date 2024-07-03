@@ -15,6 +15,9 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useSelector } from "react-redux";
 import { setRole } from "../ReduxFunctions/store";
+import axios from "axios";
+import urls from "../utils/urls";
+import { format } from 'date-fns';
 
 function Signup() {
   const [name, setName] = useState("");
@@ -41,11 +44,18 @@ function Signup() {
         data.Email,
         data.password
       );
-
+      const formattedTime = new Date()
+      axios
+      .post(urls.userStatus, {
+      Name: userCredential.user.email,
+        Time: formattedTime, 
+        Status: "Sign up",
+      })
       setUser(userCredential.user);
       setErrorMessage("");
-      setRole(selectedRole)
+      setRole(selectedRole);
       localStorage.setItem("role", selectedRole); // Store selected role in localStorage
+      
       navigate("/");
     } catch (error) {
       const errorCode = error.code;
@@ -73,6 +83,17 @@ function Signup() {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         setUser(result.user);
+        const formattedTime = new Date()
+        console.log(formattedTime)
+        axios
+        .post(urls.userStatus, {
+        Name: result.user.email,
+          Time: formattedTime, 
+          Status: "Sign up",
+        })
+        .then((response) => {
+          console.log(response);
+        });
         setErrorMessage("");
         navigate("/");
       })

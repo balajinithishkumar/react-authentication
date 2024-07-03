@@ -12,7 +12,8 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import axios from "axios";
+import urls from "../utils/urls"
 function Login() {
   const [signinemail, setsigninEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,8 +27,18 @@ function Login() {
   function signinUser(data) {
     setsigninEmail(data.Email)
     signInWithEmailAndPassword(auth, data.Email, data.password)
-      .then(() => {
+      .then((result) => {
         setErrorMessage("");
+        const formattedTime = new Date()
+        axios
+        .post(urls.userStatus, {
+          Name: result.user.email,
+          Time: formattedTime, 
+          Status: "Sign in",
+        })
+        .then((response) => {
+          console.log(response);
+        });
         navigate("/");
       })
       .catch((error) => {
@@ -59,8 +70,18 @@ function Login() {
   }
   function signinwithgoogle() {
     signInWithPopup(auth, googleProvider)
-      .then(() => {
+      .then((result) => {
         setErrorMessage("");
+        const formattedTime = new Date()
+        axios
+        .post(urls.userStatus, {
+          Name: result.user.email,
+          Time: formattedTime, 
+          Status: "Sign in",
+        })
+        .then((response) => {
+          console.log(response);
+        });
         navigate("/");
       })
       .catch((error) => {

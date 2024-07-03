@@ -2,7 +2,8 @@ import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { setUser, setRole, setLoading } from './store';
 import roles from '../roles';
-
+import urls from "../utils/urls"
+import axios from 'axios';
 export const initializeAuth = () => (dispatch) => {
   dispatch(setLoading(true));
   onAuthStateChanged(auth, (user) => {

@@ -3,13 +3,30 @@ import { auth } from "../firebase";
 import { Logout } from "@mui/icons-material";
 import "../Styles/Profile.css"
 import {useSelector } from 'react-redux';
+import axios from "axios";
+import urls from "../utils/urls";
 function Profile() {  
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
+  console.log( user)
   const handleLogout = async () => {
     try {
-      await auth.signOut();
-      localStorage.removeItem("role");
+      await auth.signOut().then(result => {
+        localStorage.removeItem("role");
+        console.log(result)
+        const formattedTime = new Date()
+          console.log(formattedTime)
+          axios
+          .post(urls.userStatus, {
+          Name: user.emailId,
+            Time: formattedTime, 
+            Status: "Sign out",
+          })
+          .then((response) => {
+            console.log(response);
+          });
+      })
+      
       navigate("/login");
     } catch (error) {
       console.error("Error signing out:", error);
