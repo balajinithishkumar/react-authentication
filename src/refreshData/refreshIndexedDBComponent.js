@@ -11,16 +11,26 @@ const RefreshIndexedDBComponent = () => {
         const response = await axios.get(urls.dhlURL);
         await saveDataToIndexedDB(response.data);
         console.log('Data refreshed in IndexedDB');
+        localStorage.setItem('lastUpdateTime', new Date().toISOString());
       } catch (error) {
         console.error('Error refreshing data:', error);
       }
     };
-    
-    // Fetch data initially and then every 20 seconds
-    fetchDataAndUpdateDB();
-    const intervalId = setInterval(fetchDataAndUpdateDB, 20000); // 20 seconds
 
-    return () => clearInterval(intervalId) // Cleanup on unmount
+    const checkAndUpdateDB = () => {
+      const lastUpdateTime = localStorage.getItem('lastUpdateTime');
+      const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+      
+      if (!lastUpdateTime || (new Date().getTime() - new Date(lastUpdateTime).getTime()) > oneWeekInMilliseconds) {
+        fetchDataAndUpdateDB();
+      }
+    };
+
+    checkAndUpdateDB();
+    
+    const intervalId = setInterval(checkAndUpdateDB, 24 * 60 * 60 * 1000); // Check daily
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
   }, []);
 
   return null; 
