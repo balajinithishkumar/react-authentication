@@ -19,6 +19,8 @@ const Dhl = () => {
         const cachedData = await getDataFromIndexedDB();
         if (cachedData.length > 0) {
           setData(cachedData);
+console.log(data)
+
           setFilteredData(cachedData);
           setColumns(Object.keys(cachedData[0])); // Extract column names dynamically
           setLoading(false);
@@ -30,7 +32,6 @@ const Dhl = () => {
         setLoading(false);
       }
     };
-
     const fetchDataAndSaveToIndexedDB = async () => {
       try {
         const response = await axios.get(urls.dhlURL);

@@ -47,6 +47,7 @@ const Sidebar = () => {
     { title: "DHL", BgColor: "#79d861", link: "/dhl" },
     { title: "ARAMEX", BgColor: "#c43c5d", link: "/aramex" },
     { title: "UPS", BgColor: "#ff5050", link: "/ups" },
+    { title: "Calculation", BgColor: "#ff5050", link: "/Calculation" },
   ];
 
   const Recent_chat_Categories = [

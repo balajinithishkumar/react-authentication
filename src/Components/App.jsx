@@ -19,11 +19,11 @@ import Dhl from "../vendors/Dhl";
 import Aramex from "../vendors/Aramex";
 import PrivateRouter from "./PrivateRoute";
 import AutoSignOut from "./AutoSignout";
+import Calculation from "./Calculation";
 
 function App() {
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.user);
-
   useEffect(() => {
     dispatch(initializeAuth());
   }, [dispatch]);
@@ -38,7 +38,7 @@ function App() {
 
   return (
     <Router>
-      <AutoSignOut timeoutMinutes={15}>
+      {/* <AutoSignOut timeoutMinutes={15}> */}
         <div className="app">
           <Routes>
             <Route
@@ -53,7 +53,16 @@ function App() {
             <Route path="/ups" element={<Ups />} />
             <Route path="/dhl" element={<Dhl />} />
             <Route path="/aramex" element={<Aramex />} />
-            <Route path="/datafetched" element={<Datafetched />} />
+            <Route path="/datafetched"
+            element={<Datafetched />} />
+            <Route path="/calculation" 
+            element={
+              <PrivateRouter
+                element={Calculation}
+                path="/calculation"
+              />
+            }
+           />
             <Route
               path="/franchiseregistration"
               element={
@@ -69,7 +78,7 @@ function App() {
             />
           </Routes>
         </div>
-      </AutoSignOut>
+      {/* </AutoSignOut> */}
     </Router>
   );
 }
